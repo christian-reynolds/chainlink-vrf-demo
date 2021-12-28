@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: ISC
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 import "hardhat/console.sol";
 
@@ -10,7 +9,7 @@ contract Randomness is VRFConsumerBase {
     uint256 public fee;
     uint256 public randomResult;
 
-    mapping(bytes32 => bool) requestProcessed;
+    mapping(bytes32 => bool) public requestProcessed;
 
     constructor() 
         VRFConsumerBase(

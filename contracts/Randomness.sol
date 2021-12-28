@@ -10,6 +10,8 @@ contract Randomness is VRFConsumerBase {
     uint256 public fee;
     uint256 public randomResult;
 
+    mapping(bytes32 => bool) requestProcessed;
+
     constructor() 
         VRFConsumerBase(
             0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B, // VRF Coordinator
@@ -24,13 +26,14 @@ contract Randomness is VRFConsumerBase {
     function getRandomNumber() public returns (bytes32 requestId) {
         require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK");
         requestId = requestRandomness(keyHash, fee);
-        console.log("This is the requestId: %s", msg.sender);
+        requestProcessed[requestId] = false;
+        console.log("This is the requestId: %s", uint(requestId));
         return requestId;
     }
 
     // Unfinished code using Chainlink VRF
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        console.log("fulfillRandomness was hit!!");
+        requestProcessed[requestId] = true;
         randomResult = randomness;
     }
 

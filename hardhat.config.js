@@ -23,5 +23,12 @@ module.exports = {
     fork: {
       url: "http://127.0.0.1:8545",
     },
+    rinkeby: {
+      url: secret.url,
+      accounts: [secret.key]  //This should be replace with [secret.key] when actually deploying to Rinkeby
+    },
+  },
+  etherscan: {
+    apiKey: secret.etherscan
   },
 };

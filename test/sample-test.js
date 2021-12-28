@@ -1,5 +1,5 @@
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
+const { network, ethers } = require("hardhat");
 
 const LINKAddress = "0x01be23585060835e02b77ef475b0cc51aa1e0709";
 const INITIAL_AMOUNT = "100";
@@ -13,6 +13,14 @@ describe("Randomness", function () {
 
     // this account needs to be unlocked when the chain is forked
     // npx ganache-cli -f https://rinkeby.infura.io/v3/{ProjectId} --unlock 0xfed4ddb595f42a5dbf48b9f318ad9b8e2685c27b -p 8545
+    // npx hardhat node --fork https://rinkeby.infura.io/v3/{ProjectId}
+
+    // this is needed when using Hardhat
+    await network.provider.request({
+      method: "hardhat_impersonateAccount",
+      params: ["0xfed4ddb595f42a5dbf48b9f318ad9b8e2685c27b"],
+    });
+
     const whale = await ethers.getSigner(
       "0xfed4ddb595f42a5dbf48b9f318ad9b8e2685c27b"
     );

@@ -22,6 +22,7 @@ contract Randomness is VRFConsumerBase {
 
     // Unfinished code using Chainlink VRF
     function getRandomNumber() public returns (bytes32 requestId) {
+        require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK");
         requestId = requestRandomness(keyHash, fee);
         console.log("This is the requestId: %s", msg.sender);
         return requestId;

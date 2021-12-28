@@ -10,6 +10,7 @@ contract Randomness is VRFConsumerBase {
     uint256 public randomResult;
 
     mapping(bytes32 => bool) public requestProcessed;
+    mapping(bytes32 => uint) public requestResult;
 
     constructor() 
         VRFConsumerBase(
@@ -33,6 +34,7 @@ contract Randomness is VRFConsumerBase {
     // Unfinished code using Chainlink VRF
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         requestProcessed[requestId] = true;
+        requestResult[requestId] = randomness;
         randomResult = randomness;
     }
 
